@@ -2,6 +2,7 @@ import React from 'react';
 import { createGlobalStyle  } from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
+import RoomListPage from './pages/RoomListPage';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -15,7 +16,8 @@ function App() {
     <>
       <GlobalStyle />
         <Routes>
-          <Route path="/" element={<LoginPage><h1>로그인</h1></LoginPage>} />
+          <Route path="/" element={<LoginPage></LoginPage>} />
+          <Route path="/rooms" element={<RoomListPage></RoomListPage>} />
         </Routes>
     </>
   );
