@@ -11,8 +11,8 @@ const StyledBox = styled.div`
   margin: ${(props) => props.margin || '196px auto 32px'};
   display: flex;
   flex-direction: ${(props) => props.flexDirection || 'column'};
-  align-items: center;      /* 추가! */
-  justify-content: center; /* 세로 중앙 정렬 */
+  align-items: center;
+  justify-content: center;
   padding: ${(props) => props.padding || '20px'};
   color: ${(props) => props.color || 'white'};
 `;

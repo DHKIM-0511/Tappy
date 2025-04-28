@@ -1,8 +1,8 @@
 import React from 'react';
 import Box from '../components/Box';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const SocialButton = styled.button`
+const socialButtonStyles = css`
   width: 100%;
   max-width: 400px;
   height: 48px;
@@ -19,7 +19,11 @@ const SocialButton = styled.button`
   padding: 0 16px;
   position: relative;
   text-align: center;
-`
+`;
+
+const SocialButton = styled.button`
+  ${socialButtonStyles}
+`;
 
 const GoogleButton = styled(SocialButton)`
   background-color: white;
@@ -30,7 +34,7 @@ const GoogleButton = styled(SocialButton)`
     background-color: #f8f9fa;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   }
-`
+`;
 
 const NaverButton = styled(SocialButton)`
   background-color: #03C75A;
@@ -40,17 +44,19 @@ const NaverButton = styled(SocialButton)`
     background-color: #02b350;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   }
-`
+`;
+
 const ButtonIcon = styled.div`
   position: absolute;
   left: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
+
 const ButtonText = styled.span`
   flex: 1;
-`
+`;
 
 const GoogleIcon = () => (
   <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
@@ -71,32 +77,45 @@ const GoogleIcon = () => (
       d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
     />
   </svg>
-)
+);
 
 const NaverIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M13.5615 10.704L6.14588 0H0V20H6.43845V9.296L13.8541 20H20V0H13.5615V10.704Z" fill="white" />
   </svg>
-)
+);
+
+const ProjectTitle = styled.div`
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #1DFFA3;
+  text-align: center;
+  letter-spacing: 2px;
+  margin-top: 64px;
+  font-family: 'Noto Sans KR', sans-serif;
+`;
 
 function LoginPage({ children }) {
-  return( 
-    <Box background='#000000' color='#1DFFA3'>{children}
-      <GoogleButton onClick={() => console.log("Google login clicked")}>
-        <ButtonIcon>
-          <GoogleIcon />
-        </ButtonIcon>
-        <ButtonText>Google로 계속하기</ButtonText>
-      </GoogleButton>
-
-      <NaverButton onClick={() => console.log("Naver login clicked")}>
-        <ButtonIcon>
-          <NaverIcon />
-        </ButtonIcon>
-        <ButtonText>네이버로 계속하기</ButtonText>
-      </NaverButton>
-    </Box>
-  )
+  return (
+    <>
+      <ProjectTitle>Tappy</ProjectTitle>
+      <Box background='#000000' color='#1DFFA3' margin='64px auto 32px'>
+        {children}
+        <GoogleButton onClick={() => console.log('Google login clicked')}>
+          <ButtonIcon>
+            <GoogleIcon />
+          </ButtonIcon>
+          <ButtonText>Google로 계속하기</ButtonText>
+        </GoogleButton>
+        <NaverButton onClick={() => console.log('Naver login clicked')}>
+          <ButtonIcon>
+            <NaverIcon />
+          </ButtonIcon>
+          <ButtonText>네이버로 계속하기</ButtonText>
+        </NaverButton>
+      </Box>
+    </>
+  );
 }
 
 export default LoginPage;
