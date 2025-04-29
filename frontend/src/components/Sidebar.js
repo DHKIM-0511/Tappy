@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { Plus } from "lucide-react";
+import { Plus, User } from "lucide-react";
+import { useProfileModal } from "../contexts/ProfileModalContext";
 import IconButton from "./IconButton";
 import SearchBar from "./SearchBar";
 import FriendItem from "./FriendItem";
@@ -19,9 +20,15 @@ const SidebarContainer = styled.div`
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
+  space-between;
   align-items: center;
   margin-bottom: 20px;
 `;
+
+const HeaderButtons = styled.div`
+  display: flex;
+  gap: 8px;
+`
 
 const Title = styled.h2`
   font-size: 18px;
@@ -48,8 +55,9 @@ const List = styled.div`
  * @param {string} [props.width] - 사이드바 너비 (CSS 값)
  * @param {Function} [props.renderItem] - 아이템 렌더링 함수 (기본값: FriendItem)
  */
-function Sidebar({ title, items, onAddClick, onSearch, searchPlaceholder, width, renderItem }) {
+function Sidebar({ title, items = [], renderItem, searchPlaceholder = "검색", onAddClick, onSearch, width = "280px" }) {
   const [searchTerm, setSearchTerm] = useState("");
+  const { openProfileModal } = useProfileModal();
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -62,16 +70,21 @@ function Sidebar({ title, items, onAddClick, onSearch, searchPlaceholder, width,
     <SidebarContainer width={width}>
       <Header>
         <Title>{title}</Title>
-        <IconButton type="add" onClick={onAddClick}>
-          <Plus size={20} />
-        </IconButton>
+        <HeaderButtons>
+          <IconButton onClick={() => openProfileModal(1)}>
+            <User size={20} />
+          </IconButton>
+          <IconButton type="add" onClick={onAddClick}>
+            <Plus size={20} />
+          </IconButton>
+        </HeaderButtons>
       </Header>
 
       <SearchBar placeholder={searchPlaceholder} value={searchTerm} onChange={handleSearch} />
 
       <List>{items.map((item) => (renderItem ? renderItem(item) : <FriendItem key={item.id} friend={item} />))}</List>
     </SidebarContainer>
-  );
+  )
 }
 
 export default Sidebar;

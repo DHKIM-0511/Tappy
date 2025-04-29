@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Avatar from "./Avatar";
+import { useProfileModal } from "../contexts/ProfileModalContext";
 
 const Container = styled.div`
   display: flex;
@@ -25,11 +26,6 @@ const Name = styled.div`
   color: #F1F3F5;
 `;
 
-const Status = styled.div`
-  font-size: 12px;
-  color: ${(props) => (props.online ? "#1DFFA3" : "#6c757d")};
-`;
-
 /**
  * 친구 요소 컴포넌트
  * @param {Object} props
@@ -38,16 +34,26 @@ const Status = styled.div`
  * @param {Function} [props.onClick] - 클릭 이벤트 핸들러
  */
 function FriendItem({ friend, action, onClick }) {
+  const { openProfileModal } = useProfileModal();
+  
+  const handleClick = () => {
+    if (onClick) {
+      onClick(friend);
+    } else {
+      // 기본 동작: 프로필 모달 열기
+      openProfileModal(friend.id);
+    }
+  };
+
   return (
-    <Container onClick={onClick}>
+    <Container onClick={handleClick}>
       <Avatar name={friend.name} color={friend.color} />
       <Info>
         <Name>{friend.name}</Name>
-        <Status online={friend.online}>{friend.status}</Status>
       </Info>
       {action && action}
     </Container>
   );
-};
+}
 
 export default FriendItem;
