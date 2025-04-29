@@ -108,11 +108,11 @@ const rooms = [
 ]
 
 const friends = [
-  { id: 1, name: "김민수", color: "#7140EA" },
-  { id: 2, name: "이지은", color: "#1DFFA3" },
-  { id: 3, name: "박준호", color: "#E02020" },
-  { id: 4, name: "최유진", color: "#EDFA19" },
-  { id: 5, name: "정승환", color: "#7140EA" },
+  { id: 2, name: "김민수", color: "#7140EA" },
+  { id: 3, name: "이지은", color: "#1DFFA3" },
+  { id: 4, name: "박준호", color: "#E02020" },
+  { id: 5, name: "최유진", color: "#EDFA19" },
+  { id: 6, name: "정승환", color: "#7140EA" },
 ]
 
 function RoomListPage() {
