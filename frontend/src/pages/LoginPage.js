@@ -1,7 +1,6 @@
 import React from 'react';
 import Box from '../components/Box';
 import styled, { css } from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
 const socialButtonStyles = css`
   width: 100%;
@@ -97,10 +96,12 @@ const ProjectTitle = styled.div`
 `;
 
 function LoginPage({ children }) {
-  const navigate = useNavigate();
+    const handleGoogleLogin = () => {
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+  };
 
-  const handleLogin = () => {
-    navigate('/rooms');
+  const handleNaverLogin = () => {
+    window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
   };
 
   return (
@@ -109,14 +110,14 @@ function LoginPage({ children }) {
       <Box background='#000000' color='#1DFFA3' margin='64px auto 32px'>
         <div style={{ textAlign: 'center', marginBottom: '58px' }}><h1>로그인</h1></div>
         {children}
-        <GoogleButton onClick={handleLogin}>
+        <GoogleButton onClick={handleGoogleLogin}>
           <ButtonIcon>
             <GoogleIcon />
           </ButtonIcon>
           <ButtonText>Google로 계속하기</ButtonText>
         </GoogleButton>
 
-        <NaverButton onClick={handleLogin}>
+        <NaverButton onClick={handleNaverLogin}>
           <ButtonIcon>
             <NaverIcon />
           </ButtonIcon>
