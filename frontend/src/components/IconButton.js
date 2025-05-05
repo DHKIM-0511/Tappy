@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Bell, Plus } from "lucide-react"
+import { Bell, Plus, Settings } from "lucide-react"
 
 const ButtonContainer = styled.button`
   width: 40px;
@@ -56,6 +56,14 @@ const IconButton = ({ type = "add", count = 0, onClick, children }) => {
         {children || <Bell size={20} />}
         {count > 0 && <NotificationBadge>{count}</NotificationBadge>}
       </NotificationContainer>
+    )
+  }
+
+  if (type === "settings") {
+    return (
+      <ButtonContainer onClick={onClick}>
+        {children || <Settings size={20} />}
+      </ButtonContainer>
     )
   }
 

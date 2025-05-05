@@ -1,12 +1,13 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef, useEffect } from 'react'
 import styled from "styled-components"
-import { Plus, Bell } from "lucide-react"
+import { Plus, Bell, Settings } from "lucide-react"
 import IconButton from "../components/IconButton"
 import SearchBar from "../components/SearchBar"
 import RoomCard from "../components/RoomCard"
 import Sidebar from "../components/Sidebar"
 import Modal from "../components/Modal"
 import FriendItem from "../components/FriendItem"
+import { logout } from "../api/api"
 
 // 스타일 컴포넌트
 const PageContainer = styled.div`
@@ -98,6 +99,36 @@ const SidebarTitle = styled.h2`
   margin-bottom: 20px;
 `
 
+const DropdownMenu = styled.div`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #000000;
+  border: 2px solid #495057;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04);
+  padding: 12px;
+  z-index: 1000;
+  width: 150px;
+  overflow: hidden;
+`
+
+const DropdownItem = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  color: #F1F3F5;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #1DFFA3;
+    color: #000000;
+    border-color: #1DFFA3;
+  }
+`
+
 // 샘플 데이터
 const rooms = [
   { id: 1, title: "프로젝트 팀", lastMessage: "다음 회의는 언제인가요?", time: "12:30", unread: 3 },
@@ -123,7 +154,9 @@ function RoomListPage() {
   const [selectedFriends, setSelectedFriends] = useState([]);
   const [friendSearchTerm, setFriendSearchTerm] = useState('');
   const [roomFriendSearchTerm, setRoomFriendSearchTerm] = useState('');
-
+  const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
+  const settingsRef = useRef(null);
+  
   // 친구 검색 핸들러
   const handleFriendSearch = (term) => {
     setFilteredFriends(friends.filter((friend) => friend.name.toLowerCase().includes(term.toLowerCase())));
@@ -185,6 +218,30 @@ function RoomListPage() {
     );
   }, [roomFriendSearchTerm]);
 
+  const handleSettingsClick = () => {
+    setShowSettingsDropdown(true);
+  };
+
+  const handleSettingsClose = () => {
+    setShowSettingsDropdown(false);
+  };
+
+  //클릭 이벤트 처리
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (settingsRef.current && !settingsRef.current.contains(event.target)) {
+        setShowSettingsDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  
+  const handleLogout = async () => {
+    await logout();
+  };
   return (
     <PageContainer>
       <MainContent>
@@ -197,6 +254,16 @@ function RoomListPage() {
             <IconButton type="notification" count={3}>
               <Bell size={20} />
             </IconButton>
+            <div style={{ position: 'relative' }} ref={settingsRef}>
+              <IconButton type="settings" onClick={() => setShowSettingsDropdown(!showSettingsDropdown)}>
+                <Settings size={20} />
+              </IconButton>
+              {showSettingsDropdown && (
+                <DropdownMenu>
+                  <DropdownItem onClick={handleLogout}>로그아웃</DropdownItem>
+                </DropdownMenu>
+              )}
+            </div>
           </HeaderButtons>
         </Header>
 
