@@ -1,6 +1,6 @@
 import { useState, useMemo, useRef, useEffect } from 'react'
 import styled from "styled-components"
-import { Plus, Bell, Settings } from "lucide-react"
+import { Plus, Bell, Settings, LogOut } from "lucide-react"
 import IconButton from "../components/IconButton"
 import SearchBar from "../components/SearchBar"
 import RoomCard from "../components/RoomCard"
@@ -103,31 +103,57 @@ const DropdownMenu = styled.div`
   position: absolute;
   top: 100%;
   right: 0;
-  background: #000000;
-  border: 2px solid #495057;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04);
-  padding: 12px;
-  z-index: 1000;
-  width: 150px;
+  background: #1A1B1E;
+  border: 1px solid #333;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  width: 250px;
   overflow: hidden;
+  margin-top: 8px;
+  z-index: 1000;
 `
 
-const DropdownItem = styled.button`
+const DropdownHeader = styled.div`
+  padding: 15px;
+  background: #212428;
+  border-bottom: 1px solid #333;
+`
+
+const DropdownTitle = styled.div`
+  color: #F1F3F5;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 4px;
+`
+
+const DropdownContent = styled.div`
+  padding: 10px 0;
+`
+
+const DropdownItem = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
+  width: 100%;
+  padding: 12px 15px;
   color: #F1F3F5;
   font-size: 14px;
   cursor: pointer;
   transition: all 0.2s ease;
-
+  
+  svg {
+    margin-right: 12px;
+    color: #717171;
+  }
+  
   &:hover {
-    background: #1DFFA3;
-    color: #000000;
-    border-color: #1DFFA3;
+    background: #2A2B2E;
+    
+    svg {
+      color: #1DFFA3;
+    }
   }
 `
+
 
 // 샘플 데이터
 const rooms = [
@@ -218,13 +244,7 @@ function RoomListPage() {
     );
   }, [roomFriendSearchTerm]);
 
-  const handleSettingsClick = () => {
-    setShowSettingsDropdown(true);
-  };
 
-  const handleSettingsClose = () => {
-    setShowSettingsDropdown(false);
-  };
 
   //클릭 이벤트 처리
   useEffect(() => {
@@ -260,7 +280,15 @@ function RoomListPage() {
               </IconButton>
               {showSettingsDropdown && (
                 <DropdownMenu>
-                  <DropdownItem onClick={handleLogout}>로그아웃</DropdownItem>
+                  <DropdownHeader>
+                    <DropdownTitle>설정</DropdownTitle>
+                  </DropdownHeader>
+                  <DropdownContent>
+                    <DropdownItem onClick={handleLogout}>
+                      <LogOut size={16} />
+                      로그아웃
+                    </DropdownItem>
+                  </DropdownContent>
                 </DropdownMenu>
               )}
             </div>
