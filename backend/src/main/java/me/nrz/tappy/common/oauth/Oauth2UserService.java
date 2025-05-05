@@ -26,12 +26,6 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
         String provider = userRequest.getClientRegistration().getRegistrationId();
         OAuth2User loginUser = super.loadUser(userRequest);
         
-        log.info("Provider: {}", provider);
-        log.info("Client ID: {}", userRequest.getClientRegistration().getClientId());
-        log.info("Client Name: {}", userRequest.getClientRegistration().getClientName());
-        log.info("Attributes: {}", loginUser.getAttributes());
-        log.info("Authorities: {}", loginUser.getAuthorities());
-
         UserInfoFactory factory = getUserInfoFactory(provider);
         UserInfo userInfo = factory.getUserInfo(loginUser);
         
