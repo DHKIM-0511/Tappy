@@ -5,4 +5,6 @@ import me.nrz.tappy.user.dto.response.UserResponse;
 public interface UserService {
 
     UserResponse getUserInfo(int id);
+
+    UserResponse searchUser(String name);
 }
