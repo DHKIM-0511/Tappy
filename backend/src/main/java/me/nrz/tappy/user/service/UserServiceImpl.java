@@ -5,9 +5,11 @@ import me.nrz.tappy.user.dto.response.UserResponse;
 import me.nrz.tappy.user.entity.User;
 import me.nrz.tappy.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
