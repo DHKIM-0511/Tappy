@@ -4,13 +4,15 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 import me.nrz.tappy.user.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-@Data
+@Getter
+@ToString
 public class Oauth2UserDetails implements OAuth2User, Serializable {
     private User user;
     private Map<String, Object> attributes;

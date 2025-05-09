@@ -13,6 +13,7 @@ import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import me.nrz.tappy.common.jwt.dto.TokenDto;
 import me.nrz.tappy.user.entity.User;
+import me.nrz.tappy.user.entity.UserRole;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -42,6 +43,9 @@ public class JwtTokenProvider {
         String accessToken = Jwts.builder()
             .setSubject(String.valueOf(user.getId()))
             .claim("name", user.getName())
+            .claim("provider", user.getProvider())
+            .claim("providerId", user.getProviderId())
+            .claim("image", user.getImage())
             .claim("role", user.getRole().getRole())
             .setExpiration(accessTokenExpiresIn)
             .signWith(key, SignatureAlgorithm.HS512)
@@ -63,11 +67,19 @@ public class JwtTokenProvider {
             throw new RuntimeException("User role must not be null");
         }
 
-        String role = claims.get("role", String.class);
+        int userId = Integer.parseInt(claims.getSubject());
+        String provider = claims.get("provider", String.class);
+        String providerId = claims.get("providerId", String.class);
+        String name = claims.get("name", String.class);
+        String image = claims.get("image", String.class);
+        String strRole = claims.get("role", String.class);
+
+        UserRole role = UserRole.valueOf(strRole.split("_")[1]);
+        User loginUser = new User(userId, provider, providerId, name, image, role);
 
         return new UsernamePasswordAuthenticationToken(
-            claims.getSubject(), null,
-            Collections.singletonList(new SimpleGrantedAuthority(role)));
+            loginUser, null,
+            Collections.singletonList(new SimpleGrantedAuthority(role.getRole())));
     }
 
     public boolean validateToken(String token) {
