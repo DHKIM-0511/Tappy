@@ -8,13 +8,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.io.Serializable;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import me.nrz.tappy.common.oauth.user_info.UserInfo;
 
 @Entity
 @Getter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class User implements Serializable {
 
     @Id
