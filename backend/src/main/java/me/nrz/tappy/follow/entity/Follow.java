@@ -33,7 +33,7 @@ public class Follow {
     @JoinColumn(name = "to_id")
     private User to;
 
-    private boolean isBreak;
+    private boolean broken;
 
     public Follow(User fromUser, User toUser){
         this.from = fromUser;
@@ -41,10 +41,10 @@ public class Follow {
     }
 
     public void breakFollow(){
-        this.isBreak = true;
+        this.broken = true;
     }
 
     public void restoreFollow(){
-        this.isBreak = false;
+        this.broken = false;
     }
 }

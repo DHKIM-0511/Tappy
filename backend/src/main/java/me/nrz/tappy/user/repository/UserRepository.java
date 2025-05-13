@@ -12,6 +12,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByProviderId(String id);
     Optional<User> findByName(String name);
 
-    @Query("SELECT u FROM User u JOIN Follow f ON f.to = u WHERE f.from = :fromUser AND f.isBreak = false")
+    @Query("SELECT u FROM User u JOIN Follow f ON f.to = u WHERE f.from = :fromUser AND f.broken = false")
     Page<User> findAllByUser(@Param("fromUser") User user, Pageable pageable);
 }
